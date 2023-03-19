@@ -1,0 +1,4 @@
+# !/bin/bash
+directory=$1
+
+echo "Given directory has $(ls $directory -R -l | grep -c ^-) files"

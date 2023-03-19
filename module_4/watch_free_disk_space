@@ -1,0 +1,15 @@
+# !/bin/bash
+
+freeSpaceThresholdInput=$1;
+freeSpace=0;
+
+while read -r output;
+  do
+    freeSpace=$((freeSpace + output))
+  done < <(df | grep -vE '^Filesystem|tmpfs|cdrom' | awk '{ print $4}')
+
+  threshold=${freeSpaceThresholdInput:-111222333}
+
+  if [[ freeSpace -lt threshold ]]; then
+    echo "You are running out of free space. Only $freeSpace bytes left"
+  fi
